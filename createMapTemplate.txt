@@ -1,0 +1,24 @@
+{
+    "data": {
+        "type": "maps",
+        "attributes": {
+            "title": "<title>",
+            "description": "<description>",
+			"source_uri": "<source_uri>",
+			"unique_id": "<unique_id>",
+            "date_depicted": <date_depicted>,
+			"map_type": "<map_type>",
+            "issue_year": <issue_year>,		
+			"tag_list": "<tag_list>",
+			"subject_area": "<subject_area>",
+			"publisher": "<publisher>",
+			"publication_place": "<publication_place>",
+			"authors": "<authors>",
+			"scale": "<scale>",
+			"metadata_projection": "<metadata_projection>",
+			"metadata_lat": "<metadata_lat>",
+			"metadata_lon": "<metadata_lon>",
+			"upload_url": "<upload_url>"
+		},
+    }
+}
