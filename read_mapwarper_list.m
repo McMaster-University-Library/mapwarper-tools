@@ -1,4 +1,4 @@
-function [H, C] = read_mapwarper_list(file_in,delimiter)
+function [H, C] = read_mapwarper_list(file_in,delimiter,nHeaderLines)
 
 %%% Loading the raw spreadsheet; reforming data: %%%%
 fid = fopen(file_in,'r');
@@ -24,12 +24,17 @@ end
 % replace '&' with '&amp;' (added 08-Aug-2016):
 for i = 1:1:size(tmp,2)
     C(:,i) = strrep(tmp{1,i}(:,1),'&','&amp;'); % remove all quotation marks from tmp and assign it a column in C
-    H{i,1} = C{1,i};    H{i,2} = C{2,i};    H{i,3} = C{3,i};
+%     H{i,1} = C{1,i};    H{i,2} = C{2,i};    H{i,3} = C{3,i};
 end
+
+for j = 1:1:nHeaderLines
+   H(:,j) = C(:,j); 
+end
+
 clear tmp;
 fclose(fid);
 
 % Remove the first three rows of C
-C(1:3,:) = [];
+C(1:nHeaderLines,:) = [];
 end
 

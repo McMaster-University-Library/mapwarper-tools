@@ -21,7 +21,7 @@ dl_url = [upload_list_url(1:ind_gid) 'export?format=tsv&' gid_no ];
 websave([series '.tsv'],dl_url);
 
 %%% Read the tsv into a Cell array
-[H, C] = read_mapwarper_list([series '.tsv'],'\t');
+[H, C] = read_mapwarper_list([series '.tsv'],'\t',2);
 
 %%% These are webwrite options that are not currently working
 options_post = weboptions('Timeout',100,'Username',secrets.username, ...
