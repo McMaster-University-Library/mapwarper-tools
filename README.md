@@ -1,8 +1,31 @@
 # mapwarper-tools
 
+## Resoureces used in this guide
+- [Digital Archive - Bulk Metadata Templates Google Sheet](https://docs.google.com/spreadsheets/d/1xmSuWdqUQ0a9RNCi2DErNO1bBcK6J06ps0moyYkg4Qk/edit#gid=1991707764)
+- [MapWarper Importer Prep Google Sheet](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=191875180)
+- [Digital Archive - Item Inventory Generator](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0)
+
+## Preparing a new set for Mapwarper ingestion
+- Open the [Import Template tab](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=191875180) of the **MapWarper Importer Prep** Google Sheet. 
+- Duplicate this sheet to a new tab. Name the sheet according to the series to be ingested.
+- Populate the sheet with the relevant information (either from the Bulk Metadata Google Sheet for the DA, The Aerial Photo Index Master Sheet, etc.). The second row provides guidance for the field--specifically, the field name in the Bulk Metadata 
+
+
+## Reference:
+
+### How to update DA inventory to ensure that uris resolve correctly (and macrepo lookup works)
+- retrieve DA inventory using [this example](https://github.com/jasonbrodeur/Fedora-SPARQL/blob/master/fedora-sparql-cookbook.md#example-4b-list-all-images-within-the-map-collection-of-the-digital-archive---no-title-no-parent)
+- Paste results into the [Inventory GSheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0)
+- after pasting, sort by column D and remove any rows with content in them (not ours)
+- The rest should auto-generate. Might need to copy and paste all formulas once more
+- Check the **Lookup Table (Derived)** tab to ensure that everything looks ok.
+- The results will automatically populate the [**Lookup (Do Not Edit)**](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1196750630) sheet in the **MapWarper Importer Prep** spreadsheet.
+
+
+### API documentation
 [API documentation](https://github.com/timwaters/mapwarper/blob/master/README_API.md#maps)
 
-
+### Notes on mapwarper API json format:
 ```http://mapwarper.lib.mcmaster.ca/api/v1/maps/17.json```
 returns the following output: 
 
@@ -121,28 +144,11 @@ or in condensed form:
 {"data": {"type": "maps","attributes": {"title": "<title>","description":"<description>","source_uri":"<source_uri>","unique_id":"<unique_id>","date_depicted":<date_depicted>,"map_type":"<map_type","issue_year":<issue_year>,"tag_list":"<tag_list>","subject_area":"<subject_area>","publisher":"<publisher>","publication_place":"<publication_place>","authors":"<authors>","scale":"<scale>","metadata_projection":"<metadata_projection>","metadata_lat":"<metadata_lat>","metadata_lon":"<metadata_lon>","upload_url": "<upload_url>"}}}
 ```
 
-
-## Full working cURL request with usernam/password missing: 
+## Full working cURL request with username/password missing: 
 
 ```
 curl -H "Content-Type: application/json" -H 'Accept: application/json'  -X POST -u <username>:<password> -d '{"data": {"type": "maps","attributes": {"title":"Doullens","description":"GSGS (series); 4040. Sheet 84, 4th ed. Nord de Guerre grid. Originally published in 1938. Held in the Lloyd Reeds Map Collection, call no. G 5830 s50 .G7 MC56J","source_uri":"https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A89237","unique_id":"WW2_France_50k_GSGS4040_084","date_depicted":"1943","map_type":"is_map","issue_year":"1943","tag_list":"topo map","subject_area":"World War, 1939-1945","publisher":"War Office","publication_place":"[London]","authors":"Great Britain. War Office. General Staff. Geographical Section.","scale":"1:50,000","metadata_projection":"","metadata_lat":"50.17","metadata_lon":"2.208","upload_url":"https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A89237/datastream/OBJ/macrepo%3A89237.tiff"}}}' http://mapwarper.lib.mcmaster.ca/api/v1/maps -b cookie
 ```
-
-## Reference:
-
-### How to update DA inventory to ensure that uris resolve correctly (and macrepo lookup works)
-- retrieve DA inventory using [this example](https://github.com/jasonbrodeur/Fedora-SPARQL/blob/master/fedora-sparql-cookbook.md#example-4b-list-all-images-within-the-map-collection-of-the-digital-archive---no-title-no-parent)
-- Paste results into the [Inventory GSheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0)
-- after pasting, sort by column D and remove any rows with content in them (not ours)
-- The rest should auto-generate. Might need to copy and paste all formulas once more
-- Check the **Lookup Table (Derived)** tab to ensure that everything looks ok.
-- The results will automatically populate the [**Lookup (Do Not Edit)**](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1196750630) sheet in the **MapWarper Importer Prep** spreadsheet.
-
-
-https://develop.zendesk.com/hc/en-us/articles/360001068567-Installing-and-using-cURL
-
-
-
 
 
 
