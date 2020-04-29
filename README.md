@@ -27,6 +27,7 @@
   - **series**: The name for the series (e.g. use the same label as was used for the Google Sheet tab).
   - **upload_list_url**: The full url of the appropriate tab in the MapWarper Importer Prep Google Sheet
   - **starting_item**: Make this equal to 1 unless you know that you need something else. This entry is optional.
+  - **items_to_process**: Allows the user to specify how many records are processed in a given run. This is good for splitting up ingestion of large sets over time. Note that doing so requires updating the value of **starting_item** to be equal to starting_item + items_to_process. This entry is optional, and the default is to process all files. 
 - The **run_mapwarper_uploader.m** script runs the **mapwarper_uploader.m** function, which:
   - downloads a copy of the Google Sheet tab in tsv (tab-separated) format. 
   - reads the tsv file
