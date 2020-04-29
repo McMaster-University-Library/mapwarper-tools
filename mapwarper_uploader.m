@@ -4,9 +4,11 @@ function [results] = mapwarper_uploader(main_dir,series,upload_list_url, startin
 %  **upload_list_url**: The full url of the appropriate tab in the MapWarper Importer Prep Google Sheet
 %  **starting_item**: Make this equal to 1 unless you know that you need something else. This entry is optional.
 %  **items_to_process**: Allows the user to specify how many records are processed in a given run. This is good for splitting up ingestion of large sets over time. Note that doing so requires updating the value of **starting_item** to be equal to starting_item + items_to_process. This entry is optional, and the default is to process all files. 
+if nargin<5
+    items_to_process = 100000;
+end
 if nargin<4
     starting_item = 1;
-    items_to_process = 100000;
 end
 
 %%% All the rest (stays the same)
@@ -41,7 +43,7 @@ api_path = 'http://mapwarper.lib.mcmaster.ca/api/v1/maps';
 
 results = struct;
 %%% Loop through all sheets, upload using curl (included in repository)
-for i = starting_item:1:size(C,1) %first 7 already ingested during tests.
+for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingested during tests.
     data = C{i,18};
     data = strrep(data,'"','\"');
     % Build the string:
@@ -50,7 +52,7 @@ for i = starting_item:1:size(C,1) %first 7 already ingested during tests.
     results(i).execute = to_execute;
     % Run the command:
     [results(i).status,results(i).cmdout] = dos(to_execute);
-    pause(5);
+    pause(180);
     %%% Perform a POST
     % response = webwrite(api_path,data,options_post);
 end
