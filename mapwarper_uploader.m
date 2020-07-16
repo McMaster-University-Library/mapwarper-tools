@@ -52,6 +52,12 @@ for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingest
     results(i).execute = to_execute;
     % Run the command:
     [results(i).status,results(i).cmdout] = dos(to_execute);
+    switch results(i).status
+        case 0
+            disp([C{i,4} ' processed. API Response: ' results(i).cmdout]);
+        case 1
+            disp([C{i,4} ' - upload failed']);
+    end
     pause(180);
     %%% Perform a POST
     % response = webwrite(api_path,data,options_post);
