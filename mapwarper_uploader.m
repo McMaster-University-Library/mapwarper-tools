@@ -29,7 +29,9 @@ secrets.password = input('Enter mapwarper password: ','s');
 ind_gid = strfind(upload_list_url,'/edit#gid');
 gid_no = upload_list_url(ind_gid+6:end);
 dl_url = [upload_list_url(1:ind_gid) 'export?format=tsv&' gid_no ];
-websave([series '.tsv'],dl_url);
+options = weboptions; options.Timeout = 30; 
+
+websave([series '.tsv'],dl_url, options);
 
 %%% Read the tsv into a Cell array
 [H, C] = read_mapwarper_list([series '.tsv'],'\t',2);

@@ -108,3 +108,14 @@ starting_item = 1; % usually 1 (to start at the first item and work the entire w
 % Run it
 [results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item);
 
+%% WW2_CityPlans_Japan
+cd('D:\Local\mapwarper-tools');
+main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
+series = 'WW2_CityPlans_Japan'; % Specify the name of the series (used for labeling files)
+upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1489164298'; % Copy URL to specific sheet with mapwarper import strings
+starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
+% items_to_process = 20;
+
+% Run it
+[results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item);
+
