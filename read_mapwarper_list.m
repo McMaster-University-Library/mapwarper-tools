@@ -28,7 +28,7 @@ for i = 1:1:size(tmp,2)
 end
 
 for j = 1:1:nHeaderLines
-   H(:,j) = C(:,j); 
+   H(:,j) = C(j,:); 
 end
 
 clear tmp;
