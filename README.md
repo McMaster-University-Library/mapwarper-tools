@@ -11,24 +11,24 @@
 - Right click > Duplicate this sheet to a new tab. Name the sheet according to the series to be ingested (e.g. use the identifier prefix that's used in the digital archive).
 - For all green-highlighted columns, populate the sheet with the relevant information (either from the [Digital Archive - Bulk Metadata Templates Google Sheet](https://docs.google.com/spreadsheets/d/1xmSuWdqUQ0a9RNCi2DErNO1bBcK6J06ps0moyYkg4Qk/edit#gid=1991707764), the [Aerial Photo Index Master Spreadsheet](https://docs.google.com/spreadsheets/d/180qQStP5EkeY_3a4eM5lXcDYv3QY4zFq4l5bx3BZ8m0/edit#gid=0), etc.). 
   - The second row provides guidance for the field--specifically, the field name in the [Digital Archive - Bulk Metadata Templates Google Sheet](https://docs.google.com/spreadsheets/d/1xmSuWdqUQ0a9RNCi2DErNO1bBcK6J06ps0moyYkg4Qk/edit#gid=1991707764). If populating from another source, use your discretion to deternine the most appropriate field
-  - The **"map_type"** column is conditionally formatted to be one of the three allowed values
-  - For the **tag_list** column, enter at least one tag for the type ('topo map', 'aerial photo'), and then enter a tag for the series (e.g. use the same tag as used for the new spreadsheet tab that you've created). Separate entries with a comma.
+  - The ```map_type``` column is conditionally formatted to be one of the three allowed values
+  - For the ```tag_list``` column, enter at least one tag for the type ('topo map', 'aerial photo'), and then enter a tag for the series (e.g. use the same tag as used for the new spreadsheet tab that you've created). Separate entries with a comma.
 - There are four yellow-highlighted columns -- do not edit these columns, as they are automatically generated. All you need to do is drag down the formulas for each column to match the number of rows of data. Each of these columns is populated as such:
-  - The **macrepo number** column is generated using a lookup table that lives in the *Lookup (DO NOT EDIT)* tab of the sheet. Do not edit this sheet, as it is populated automatically from the [Digital Archive - Item Inventory Generator Google Sheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0).
-  - The **source_uri** column is the URL to the item in the Digital Archive. It is generated from the macrepo number. 
+  - The ```macrepo number``` column is generated using a lookup table that lives in the *Lookup (DO NOT EDIT)* tab of the sheet. Do not edit this sheet, as it is populated automatically from the [Digital Archive - Item Inventory Generator Google Sheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0).
+  - The ```source_uri``` column is the URL to the item in the Digital Archive. It is generated from the macrepo number. 
     - e.g. ```https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A89224```
-  - The **upload_url** column is the URL to the TIFF file for the item in the Digital Archive. It is generated from the macrepo number. 
+  - The ```upload_url``` column is the URL to the TIFF file for the item in the Digital Archive. It is generated from the macrepo number. 
     - e.g. ```https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A89224/datastream/OBJ/macrepo%3A89224.tiff```
-  - The **import string** column is built by concatenating all of the values from the other columns. A macrepo number is required for this cell to read something other than #N/A. Otherwise, it is tolerant to other empty fields.
+  - The ```import string``` column is built by concatenating all of the values from the other columns. A macrepo number is required for this cell to read something other than #N/A. Otherwise, it is tolerant to other empty fields.
 
 ## Ingesting a new set into Mapwarper
-- Create a new entry for the series in the **run_mapwarper_uploader.m** script. Add information for: 
-  - **main_dir**: location of the cloned mapwarper-tools repo
-  - **series**: The name for the series (e.g. use the same label as was used for the Google Sheet tab).
-  - **upload_list_url**: The full url of the appropriate tab in the MapWarper Importer Prep Google Sheet
-  - **starting_item**: Make this equal to 1 unless you know that you need something else. This entry is optional.
-  - **items_to_process**: Allows the user to specify how many records are processed in a given run. This is good for splitting up ingestion of large sets over time. Note that doing so requires updating the value of **starting_item** to be equal to starting_item + items_to_process. This entry is optional, and the default is to process all files. 
-- The **run_mapwarper_uploader.m** script runs the **mapwarper_uploader.m** function, which:
+- Create a new entry for the series in the ```run_mapwarper_uploader.m``` script. Add information for: 
+  - ```main_dir```: location of the cloned mapwarper-tools repo
+  - ```series```: The name for the series (e.g. use the same label as was used for the Google Sheet tab).
+  - ```upload_list_url```: The full url of the appropriate tab in the MapWarper Importer Prep Google Sheet
+  - ```starting_item```: Make this equal to 1 unless you know that you need something else. This entry is optional.
+  - ```items_to_process```: Allows the user to specify how many records are processed in a given run. This is good for splitting up ingestion of large sets over time. Note that doing so requires updating the value of ```starting_item``` to be equal to starting_item + items_to_process. This entry is optional, and the default is to process all files. 
+- The ```run_mapwarper_uploader.m``` script runs the ```mapwarper_uploader.m``` function, which:
   - downloads a copy of the Google Sheet tab in tsv (tab-separated) format. 
   - reads the tsv file
   - one by one, uses the import string with cURL (through a DOS command) to upload the files to MapWarper.
@@ -40,7 +40,7 @@
 - Paste results into the [Inventory GSheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0)
 - after pasting, sort by column D and remove any rows with content in them (not ours)
 - The rest should auto-generate. Might need to copy and paste all formulas once more
-- Check the **Lookup Table (Derived)** tab to ensure that everything looks ok.
+- Check the ```Lookup Table (Derived)``` tab to ensure that everything looks ok.
 - The results will automatically populate the [**Lookup (Do Not Edit)**](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1196750630) sheet in the **MapWarper Importer Prep** spreadsheet.
 
 ### API documentation
