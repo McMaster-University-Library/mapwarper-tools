@@ -1,6 +1,6 @@
 # mapwarper-tools
 
-## Resoureces used or referenced in this guide
+## Resources used or referenced in this guide
 - [Digital Archive - Bulk Metadata Templates Google Sheet](https://docs.google.com/spreadsheets/d/1xmSuWdqUQ0a9RNCi2DErNO1bBcK6J06ps0moyYkg4Qk/edit#gid=1991707764)
 - [MapWarper Importer Prep Google Sheet](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=191875180)
 - [Digital Archive - Item Inventory Generator](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=0)
