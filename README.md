@@ -7,6 +7,44 @@
 - [Aerial Photo Index Master Spreadsheet](https://docs.google.com/spreadsheets/d/180qQStP5EkeY_3a4eM5lXcDYv3QY4zFq4l5bx3BZ8m0/edit#gid=0)
 
 ## Preparing a new set for Mapwarper ingestion
+
+### If metadata DOES NOT already exist in bulk imported spreadsheet
+1. Run example 1 of Fedora Sparql cookbook in the Fedora [RIQS](http://dcs1.mcmaster.ca/fedora/risearch) to get all items in the collection. **Be sure to extract as .tsv**. e.g.:
+```
+PREFIX islandora-rels-ext: <http://islandora.ca/ontology/relsext#>
+
+SELECT ?pid ?label ?id ?state
+FROM <#ri>
+WHERE {
+
+?pid <fedora-rels-ext:isMemberOfCollection> <info:fedora/macrepo:8286> ;
+	<fedora-model:label> ?label ;
+<dc:identifier> ?id ;
+<info:fedora/fedora-system:def/model#state> ?state ;
+<info:fedora/fedora-system:def/model#state> <info:fedora/fedora-system:def/model#Active>;
+
+}
+
+ORDER BY ?pid
+```
+1. copy output list into Digital Archive [Item Inventory Generator Google Sheet](https://docs.google.com/spreadsheets/d/14NTOutHExIA70Kxr62Wm6CeC8pLv1VXz87YWgZFDOJQ/edit#gid=130691994)
+1. Copy the contents of the ```FINAL LIST - unique macrepos``` column to a new text file. Name it something along the lines of ```macrepos_xxxx.csv```, where the ```xxxxx``` is the macrepo number of the parent collection. 
+1. Edit and execute ```run_DA_bulk_downloader.m``` to download dublin core metadata records for each item to the specified download directory. e.g.
+```
+cd('D:\Local\Digital-Archive-Tools\BulkTools\');
+download_list = 'H:\Digitization_Projects\omeka-tests\HamFIP1898\macrepos.csv';
+download_dir = 'H:\Digitization_Projects\omeka-tests\HamFIP1898\';
+download_type = 'DC';
+DA_bulk_downloader(download_type,download_dir,download_list);
+```
+1. Edit and run ```run_DA_dc_to_csv.m``` to convert the individual dublin core xml files to a single csv file. e.g.:
+```
+cd('D:\Local\Digital-Archive-Tools\BulkTools')
+DA_dc_to_csv('H:\Digitization_Projects\omeka-tests\HamFIP1898\DC\');
+```
+
+### If metadata DOES exist in bulk imported spreadsheet
+
 - Open the [Import Template tab](https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=191875180) of the *MapWarper Importer Prep* Google Sheet. 
 - Right click > Duplicate this sheet to a new tab. Name the sheet according to the series to be ingested (e.g. use the identifier prefix that's used in the digital archive).
 - For all green-highlighted columns, populate the sheet with the relevant information (either from the [Digital Archive - Bulk Metadata Templates Google Sheet](https://docs.google.com/spreadsheets/d/1xmSuWdqUQ0a9RNCi2DErNO1bBcK6J06ps0moyYkg4Qk/edit#gid=1991707764), the [Aerial Photo Index Master Spreadsheet](https://docs.google.com/spreadsheets/d/180qQStP5EkeY_3a4eM5lXcDYv3QY4zFq4l5bx3BZ8m0/edit#gid=0), etc.). 
