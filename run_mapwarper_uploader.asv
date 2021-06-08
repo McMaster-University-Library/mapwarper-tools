@@ -163,69 +163,13 @@ starting_item = 1; % usually 1 (to start at the first item and work the entire w
 % Run it
 [results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item);
 
-%% AirPhotos_Dundas_1963
+%% AirPhotos_Hamilton_1954-1955
 cd('D:\Local\mapwarper-tools');
 main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Dundas_1963'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1173505839'; % Copy URL to specific sheet with mapwarper import strings
-starting_item = 2; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
-items_to_process = 1000;
-
-% Run it (Note, I created secrets as a variable using the command window)
-[results1] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
-%% AirPhotos_Hamilton_1961
-cd('D:\Local\mapwarper-tools');
-main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Hamilton_1961'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1419417378'; % Copy URL to specific sheet with mapwarper import strings
-starting_item = 2; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
-items_to_process = 1000;
-
-% Run it (Note, I created secrets as a variable using the command window)
-[results2] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
-%% AirPhotos_Hamilton_1958-1959
-cd('D:\Local\mapwarper-tools');
-main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Hamilton_1958-1959'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=158435011'; % Copy URL to specific sheet with mapwarper import strings
+series = 'AirPhotos_Hamilton_1954-1955'; % Specify the name of the series (used for labeling files)
+upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=715299971'; % Copy URL to specific sheet with mapwarper import strings
 starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
 items_to_process = 1000;
 
-% Run it (Note, I created secrets as a variable using the command window)
-[results3] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
-%% AirPhotos_Hamilton_1956
-cd('D:\Local\mapwarper-tools');
-main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Hamilton_1956'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=1282735139'; % Copy URL to specific sheet with mapwarper import strings
-starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
-items_to_process = 1000;
-
-% Run it (Note, I created secrets as a variable using the command window)
-[results4] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
-%% AirPhotos_Hamilton_1953
-cd('D:\Local\mapwarper-tools');
-main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Hamilton_1953'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=618761021'; % Copy URL to specific sheet with mapwarper import strings
-starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
-items_to_process = 1000;
-
-% Run it (Note, I created secrets as a variable using the command window)
-[results5] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
-%% AirPhotos_Hamilton_1952
-cd('D:\Local\mapwarper-tools');
-main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
-series = 'AirPhotos_Hamilton_1952'; % Specify the name of the series (used for labeling files)
-upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=17566774'; % Copy URL to specific sheet with mapwarper import strings
-starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
-items_to_process = 1000;
-
-% Run it (Note, I created secrets as a variable using the command window)
-[results6] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
-
+% Run it (Note, I created secrets as a variable using the command windo
+[results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);

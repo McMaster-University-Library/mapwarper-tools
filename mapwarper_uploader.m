@@ -1,9 +1,19 @@
-function [results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process)
+function [results] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process, secrets)
 %  **main_dir**: location of the cloned mapwarper-tools repo
 %  **series**: The name for the series (e.g. use the same label as was used for the Google Sheet tab).
 %  **upload_list_url**: The full url of the appropriate tab in the MapWarper Importer Prep Google Sheet
 %  **starting_item**: Make this equal to 1 unless you know that you need something else. This entry is optional.
 %  **items_to_process**: Allows the user to specify how many records are processed in a given run. This is good for splitting up ingestion of large sets over time. Note that doing so requires updating the value of **starting_item** to be equal to starting_item + items_to_process. This entry is optional, and the default is to process all files. 
+if nargin < 6
+%%% Load the secrets file (with password information)
+% load([main_dir '/secrets.mat']);
+%%% Update -- collect from user
+secrets = struct;
+secrets.username = input('Enter mapwarper username (email): ','s');
+secrets.password = input('Enter mapwarper password: ','s');
+   
+end
+
 if nargin<5
     items_to_process = 100000;
 end
@@ -18,12 +28,6 @@ if strcmp(main_dir(end),'/')==1
     main_dir = main_dir(1:end-1);
 end
 
-%%% Load the secrets file (with password information)
-% load([main_dir '/secrets.mat']);
-%%% Update -- collect from user
-secrets = struct;
-secrets.username = input('Enter mapwarper username (email): ','s');
-secrets.password = input('Enter mapwarper password: ','s');
 
 %%% Download GSheet; save as tsv
 ind_gid = strfind(upload_list_url,'/edit#gid');
@@ -35,7 +39,7 @@ websave([series '.tsv'],dl_url, options);
 
 %%% Read the tsv into a Cell array
 [H, C] = read_mapwarper_list([series '.tsv'],'\t',2);
-items_to_process = min([items_to_process; size(C,1)],[],1);
+items_to_process = min([items_to_process; size(C,1)+1-starting_item],[],1);
 
 %%% These are webwrite options that are not currently working
 options_post = weboptions('Timeout',100,'Username',secrets.username, ...
@@ -48,6 +52,8 @@ results = struct;
 for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingested during tests.
     data = C{i,18};
     data = strrep(data,'"','\"');
+    data = strrep(data,'&','and'); % Added 2021-04-05 by JJB
+    
     % Build the string:
     to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
         '-X POST -u ' secrets.username ':' secrets.password ' -d "' data '" http://mapwarper.lib.mcmaster.ca/api/v1/maps -b cookie'];
@@ -60,7 +66,7 @@ for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingest
         case 1
             disp([C{i,4} ' - upload failed']);
     end
-    pause(180);
+    pause(60);
     %%% Perform a POST
     % response = webwrite(api_path,data,options_post);
 end
