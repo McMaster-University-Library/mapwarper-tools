@@ -56,12 +56,10 @@ for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingest
     
     
     
-    %%% New section to replace diacritics with unaccented [JJB 2021-06-18]
-    stracc =        {'à';'á';'â';'ã';'ä';'å';'À';'Á';'Â';'Ã';'Ä';'Å';'Æ' ;'æ' ;'ç';'Ç';'è';'é';'ê';'ë';'È';'É';'Ê';'Ë';'ì';'í';'î';'ï';'ò';'ó';'ô';'õ';'ö';'Ò';'Ó';'Ô';'Õ';'Ö';'ù';'ú';'û';'ü';'Ù';'Ú';'Û';'Ü';'ý';'ÿ';'Ý'};
-    strreplace =        {'a';'a';'a';'a';'a';'a';'A';'A';'A';'A';'A';'A';'Ae';'ae';'c';'C';'e';'e';'e';'e';'E';'E';'E';'E';'i';'i';'i';'i';'o';'o';'o';'o';'o';'O';'O';'O';'O';'O';'u';'u';'u';'u';'U';'U';'U';'U';'y';'y';'Y'};
-    for j = 1:1:length(stracc)
-        data = strrep(data,stracc{j}, strreplace{j});
-    end
+    %%% New section to replace diacritics with unaccented
+    stracc =        {'à';'á';'â';'ã';'ä';'å';'À';'Á';'Â';'Ã';'Ä';'Å';'Æ';'æ';'ç';'Ç';'è';'é';'ê';'ë';'È';'É';'Ê';'Ë';'ì';'í';'î';'ï';'ò';'ó';'ô';'õ';'ö';'Ò';'Ó';'Ô';'Õ';'Ö';'ù';'ú';'û';'ü';'Ù';'Ú';'Û';'Ü';'ý';'ÿ';'Ý'};
+strreplace =        {'a';'a';'a';'a';'a';'a';'A';'A';'A';'A';'A';'A';'Ae';'ae';'c';'C';'e';'e';'e';'e';'E';'E';'E';'E';'i';'i';'i';'i';'o';'o';'o';'o';'o';'O';'O';'O';'O';'O';'u';'u';'u';'u';'U';'U';'U';'U';'y';'y';'Y'};
+    
     %%%
     
     % Build the string:
@@ -76,7 +74,7 @@ for i = starting_item:1:starting_item+items_to_process-1 %first 7 already ingest
         case 1
             disp([C{i,4} ' - upload failed']);
     end
-    pause(10);
+    pause(60);
     %%% Perform a POST
     % response = webwrite(api_path,data,options_post);
 end
