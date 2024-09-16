@@ -51,9 +51,9 @@ json_out = [json_out(1:end-1) ']}']; %Remove final trailing comma
 to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
     '-X POST -u ' secrets.username ':' secrets.password ' -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
 
-to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
-    '-X POST -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
-
+% to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
+%     '-X POST -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
+% 
 results(j).execute = to_execute;
 % Run the command:
 [results(j).status,results(j).cmdout] = dos(to_execute);
