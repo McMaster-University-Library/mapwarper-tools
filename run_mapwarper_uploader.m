@@ -354,4 +354,14 @@ items_to_process = 1000;
 % Run it (Note, I created secrets as a variable using the command window)
 [results6] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
 
+%% AirPhotos_Hamilton_1934 (219)
+cd('D:\Local\mapwarper-tools');
+main_dir = 'D:\Local\mapwarper-tools'; % Location of the mapwarper-tools repo
+series = 'AirPhotos_Hamilton_1934'; % Specify the name of the series (used for labeling files)
+upload_list_url = 'https://docs.google.com/spreadsheets/d/1lv4QRQehMqNYLdj-htTJ9NXM_LPJi0DgDyHxeaAFH8I/edit#gid=643350372'; % Copy URL to specific sheet with mapwarper import strings
+starting_item = 1; % usually 1 (to start at the first item and work the entire way through; might be higher if other items have already been ingested (through testing, perhaps).
+items_to_process = 1000;
+
+% Run it (Note, I created secrets as a variable using the command window)
+[results6] = mapwarper_uploader(main_dir,series,upload_list_url, starting_item, items_to_process,secrets);
 

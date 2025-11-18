@@ -1,3 +1,8 @@
+
+% From API guide: https://github.com/timwaters/mapwarper/blob/master/README_API.md#add-many-gcps
+% curl -H "Content-Type: application/json" -H 'Accept: application/json' -X POST -d '{"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}' http://mapwarper.net/api/v1/gcps/add_many -b cookie
+
+
 start_dir = 'D:\Local\mapwarper-tools';
 cd(start_dir); 
 mw_mapnum = 793; % The mapwarper item number
@@ -40,6 +45,8 @@ C2 = cellfun(@str2double,C);
 
 %%% Let's just try to write the json snippet
 % e.g., {"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}
+% 
+
 
 json_out = '{"gcps":[';
 for i = 1:1:size(C2,1)
@@ -50,7 +57,8 @@ json_out = [json_out(1:end-1) ']}']; %Remove final trailing comma
 % Build the full API string:
 to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
     '-X POST -u ' secrets.username ':' secrets.password ' -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
-
+% curl -H "Content-Type: application/json" -H 'Accept: application/json' -X POST -d '{"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}' http://mapwarper.net/api/v1/gcps/add_many -b cookie
+to_execute = strrep(to_execute,"''","'");
 % to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
 %     '-X POST -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
 % 

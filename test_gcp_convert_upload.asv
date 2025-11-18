@@ -1,12 +1,29 @@
+
+% From API guide: https://github.com/timwaters/mapwarper/blob/master/README_API.md#add-many-gcps
+% curl -H "Content-Type: application/json" -H 'Accept: application/json' -X POST -d '{"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}' http://mapwarper.net/api/v1/gcps/add_many -b cookie
+
+
 start_dir = 'D:\Local\mapwarper-tools';
 cd(start_dir); 
 mw_mapnum = 793; % The mapwarper item number
+j = 1;
 
 % Gather secrets:
 secrets = struct;
 secrets.username = input('Enter mapwarper username (email): ','s');
 secrets.password = input('Enter mapwarper password: ','s');
-
+ 
+% Sign in 
+to_auth = ['curl-7.69.1-win64-mingw\bin\curl -X POST http://mapwarper.lib.mcmaster.ca/api/v1/auth/sign_in.json -H "Content-Type: application/json" -d ''{"user":{"email":"' secrets.username '","password":"' secrets.password '"}}'' -v'];
+results.to_auth= to_auth;
+% Run the command:
+[results.auth_status,results.auth_cmdout] = dos(to_auth);
+% switch results.auth_status
+%     case 0
+%         disp(['GCP list for Map ' num2str(mw_mapnum) ' processed. /n API Response: ' results(j).cmdout]);
+%     case 1
+%         disp(['GCP list for Map ' num2str(mw_mapnum) ' - upload failed']);
+% end
 
 %%% Load the QGIS gcp file: 
 [H, C] = read_mapwarper_list([start_dir '/gcp-tests/gcp-' num2str(mw_mapnum) '.csv'],',',1);
@@ -28,6 +45,8 @@ C2 = cellfun(@str2double,C);
 
 %%% Let's just try to write the json snippet
 % e.g., {"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}
+% 
+
 
 json_out = '{"gcps":[';
 for i = 1:1:size(C2,1)
@@ -37,13 +56,18 @@ json_out = [json_out(1:end-1) ']}']; %Remove final trailing comma
 
 % Build the full API string:
 to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
-    '-X POST -u ' secrets.username ':' secrets.password ' -d ''' json_out ''' https://mapexplorer.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
-results(i).execute = to_execute;
+    '-X POST -u ' secrets.username ':' secrets.password ' -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
+% curl -H "Content-Type: application/json" -H 'Accept: application/json' -X POST -d '{"gcps":[{"mapid":123,"x":2,"y":3,"lat":"52.56","lon":"-4.65"},{"mapid":123,"x":12,"y":23,"lat":"32.56","lon":"-2.65"}]}' http://mapwarper.net/api/v1/gcps/add_many -b cookie
+to_execute = strrep(to_execute,'''','')
+% to_execute = ['curl-7.69.1-win64-mingw\bin\curl -H "Content-Type: application/json" -H "Accept: application/json" '...
+%     '-X POST -d ''' json_out ''' http://mapwarper.lib.mcmaster.ca/api/v1/gcps/add_many -b cookie'];
+% 
+results(j).execute = to_execute;
 % Run the command:
-[results(i).status,results(i).cmdout] = dos(to_execute);
-switch results(i).status
+[results(j).status,results(j).cmdout] = dos(to_execute);
+switch results(j).status
     case 0
-        disp(['GCP list for Map ' num2str(mw_mapnum) ' processed. /n API Response: ' results(i).cmdout]);
+        disp(['GCP list for Map ' num2str(mw_mapnum) ' processed. API Response: ' results(j).cmdout]);
     case 1
         disp(['GCP list for Map ' num2str(mw_mapnum) ' - upload failed']);
 end
